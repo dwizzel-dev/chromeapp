@@ -1,0 +1,28 @@
+{
+    "name": "Tcp!",
+    "description": "Tcp/Ip testing socket with node.js",
+    "version": "1.0",
+    "manifest_version": 2,
+    "app": {
+      "background": {
+        "scripts": [
+          "js/bg/background.js"
+        ]
+      }
+    },
+    "content_scripts": [{
+      "matches": ["http://*/*","https://*/*"],
+      "js": [
+        "js/injected/jquery-3.3.1.min.js",
+        "js/injected/bootstrap.min.js",
+        "js/content/app.js"
+      ]
+    }],
+    "sockets": {
+      "tcp": {
+        "connect": "",
+        "create": ""
+      }
+    },
+    "icons": { "16": "img/icon-16.png", "128": "img/icon-128.png" }
+  }

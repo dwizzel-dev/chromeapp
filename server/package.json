@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "tcp id server testing woth chrome extensions",
+  "main": "tcp-server.js",
+  "scripts": {
+    "test": "node tcp-server.js"
+  },
+  "keywords": [
+    "tcp"
+  ],
+  "author": "dwizzel",
+  "license": "ISC"
+}
