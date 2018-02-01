@@ -54,6 +54,7 @@ var logger = (function(){
                         logger.output('receiving data');
                         logger.output(dataInfos);
                         logger.warn(dataInfos.data);
+                        logger.output(buffer.from(dataInfos.data));
                         client.write('hello back\r\n');
                         });
                     }
@@ -90,11 +91,11 @@ var logger = (function(){
   })();
 
 var buffer = (function(){
-    function stringToArrayBuffer(buf) {
+    function arrayBuffertoString(buf) {
         return String.fromCharCode.apply(null, new Uint8Array(buf)); //for utf-16 Uint16Array 
     }
-    function arrayBuffertoString(str) {
-        var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+    function stringToArrayBuffer(str) {
+        var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
         var bufView = new Uint8Array(buf); //for utf-16 Uint16Array 
         for (var i=0, strLen=str.length; i < strLen; i++) {
             bufView[i] = str.charCodeAt(i);
@@ -102,7 +103,7 @@ var buffer = (function(){
         return buf;
     }
     return {
-        to:arrayBuffertoString, 
+        to:stringToArrayBuffer, 
         from:arrayBuffertoString
     };
   })();
