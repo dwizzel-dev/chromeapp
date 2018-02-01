@@ -76,7 +76,8 @@ var buffer = (function () {
         //return String.fromCharCode.apply(null, new Uint8Array(buf)); //for utf-16 Uint16Array 
     }
     function stringToArrayBuffer(str) {
-        var buf = new ArrayBuffer(str.length); // 2 bytes for each char
+        var buf = new ArrayBuffer(str.length * 1); // 2 bytes for each char
+        //console.log('len[0]: ' + buf.byteLength);
         var bufView = new Uint8Array(buf); //for utf-16 Uint16Array 
         // From an iterable 
         /*
@@ -88,6 +89,7 @@ var buffer = (function () {
         for (var i = 0, strLen = str.length; i < strLen; i++) {
             bufView[i] = str.charCodeAt(i);
         }
+        //console.log('len[1]: ' + buf.byteLength);
         return buf;
     }
 

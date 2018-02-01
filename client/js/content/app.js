@@ -67,15 +67,15 @@ var logger = (function(){
     };
 
     var read = function(dataInfos){
-        let byteHandshake = buffer.to('àûôâ--hell oh!');
+        let buffHandshake = buffer.to('àûôâ--hell oh!');
         logger.output('receiving data');
-        logger.output(dataInfos);
+        //logger.output(dataInfos);
         logger.warn(dataInfos.data);
-        logger.output(dataInfos.data);
+        logger.warn(buffHandshake);
+        //logger.output(dataInfos.data);
         let string = buffer.from(dataInfos.data);
         logger.display(string);
-        logger.warn(byteHandshake);
-        if(buffer.equal(byteHandshake, dataInfos.data)){
+        if(buffer.equal(buffHandshake, dataInfos.data)){
             client.write('yelling back at you!!!');
         };
     };
