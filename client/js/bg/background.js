@@ -10,7 +10,10 @@ chrome.app.runtime.onLaunched.addListener(function() {
 		chrome.app.window.create('window.html', {id: "mainwindow", innerBounds: {width: 800, height: 600}}, function(w){
         console.log('window created');
         mainWindow = w;
-        //client.connect('localhost', 3200);
       });
 	}
+});
+
+chrome.app.window.onClosed.addListener(function (){
+  console.log('window closed');  
 });

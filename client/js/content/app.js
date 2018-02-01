@@ -1,9 +1,10 @@
 
 
-
 window.onload = function() {
     logger.output("main window loaded");
-    client.connect('localhost', 3200);
+    setTimeout(function(){
+        client.connect('localhost', 3200);
+    },1000);
 }
 
 // background page
@@ -32,11 +33,14 @@ var logger = (function(){
   })();
   
   // client
-  var socketId = 0;
-  var tcp = chrome.sockets.tcp;;
+  
   var client = (function(){
+    var socketId = 0;
+    var tcp = chrome.sockets.tcp;
     var connect = function(host, port){
-        tcp.create(function(creationInfos){
+        var socketProp = {persistent: true, name:'tcptest', bufferSize: 256};
+        tcp.onReceive.addListener(client.read);
+        tcp.create(socketProp, function(creationInfos){
             logger.output(creationInfos);
             logger.output('socket created');
             socketId = creationInfos.socketId;
@@ -49,14 +53,7 @@ var logger = (function(){
                             logger.output(lastErr.message);  
                         }
                     }else{
-                    logger.output('socket connected');
-                    tcp.onReceive.addListener(function(dataInfos){
-                        logger.output('receiving data');
-                        logger.output(dataInfos);
-                        logger.warn(dataInfos.data);
-                        logger.output(buffer.from(dataInfos.data));
-                        client.write('hello back\r\n');
-                        });
+                        logger.output('socket connected');
                     }
                 });
             }else{
@@ -64,6 +61,16 @@ var logger = (function(){
             }
         })
     };
+
+    var read = function(dataInfos){
+        logger.output('receiving data');
+        logger.output(dataInfos);
+        logger.warn(dataInfos.data);
+        logger.output(dataInfos.data);
+        logger.output(buffer.from(dataInfos.data));
+        client.write('àûôâ--yell back!');
+    };
+
     var write = function(str){
         if(socketId){
             tcp.getInfo(socketId, function(socketInfos){
@@ -86,24 +93,8 @@ var logger = (function(){
     };
     return {
         connect:connect, 
-        write:write
+        write:write,
+        read:read
     };
   })();
 
-var buffer = (function(){
-    function arrayBuffertoString(buf) {
-        return String.fromCharCode.apply(null, new Uint8Array(buf)); //for utf-16 Uint16Array 
-    }
-    function stringToArrayBuffer(str) {
-        var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
-        var bufView = new Uint8Array(buf); //for utf-16 Uint16Array 
-        for (var i=0, strLen=str.length; i < strLen; i++) {
-            bufView[i] = str.charCodeAt(i);
-        }
-        return buf;
-    }
-    return {
-        to:stringToArrayBuffer, 
-        from:arrayBuffertoString
-    };
-  })();
