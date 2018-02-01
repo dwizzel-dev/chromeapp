@@ -25,10 +25,14 @@ var logger = (function(){
     var warn = function(str) {
         console.warn(str);
     };
+    var display = function(str) {
+        $('#message').append(str + '</ br>');
+    };
     return {
         output:output, 
         error:error, 
-        warn:warn
+        warn:warn,
+        display:display
     };
   })();
   
@@ -63,12 +67,17 @@ var logger = (function(){
     };
 
     var read = function(dataInfos){
+        let byteHandshake = buffer.to('àûôâ--hell oh!');
         logger.output('receiving data');
         logger.output(dataInfos);
         logger.warn(dataInfos.data);
         logger.output(dataInfos.data);
-        logger.output(buffer.from(dataInfos.data));
-        client.write('àûôâ--yell back!');
+        let string = buffer.from(dataInfos.data);
+        logger.display(string);
+        logger.warn(byteHandshake);
+        if(buffer.equal(byteHandshake, dataInfos.data)){
+            client.write('yelling back at you!!!');
+        };
     };
 
     var write = function(str){
