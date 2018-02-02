@@ -26,7 +26,7 @@ var logger = (function(){
         console.warn(str);
     };
     var display = function(str) {
-        $('#message').append(str + '</ br>');
+        $('#message').append(str + '<br />');
     };
     return {
         output:output, 
