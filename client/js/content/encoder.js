@@ -89,7 +89,7 @@ var buffer = (function () {
         for (var i = 0, strLen = str.length; i < strLen; i++) {
             bufView[i] = str.charCodeAt(i);
         }
-        //console.log('len[1]: ' + buf.byteLength);
+        console.log(Array.prototype.slice.call(bufView));
         return buf;
     }
 
